@@ -1,6 +1,9 @@
-import { Schema, model } from 'mongoose';
+import pkg from 'mongoose';
+const { Schema, model } = pkg;
 
-const veterinarySchema = new Schema({
+import generateId from '../helpers/generate.js';
+
+const VeterinarySchema = Schema({
     name: {
         type: String,
         required: true,
@@ -30,6 +33,7 @@ const veterinarySchema = new Schema({
     },
     token: {
         type: String,
+        default: generateId(),
     },
     veryfied: {
         type: Boolean,
@@ -42,4 +46,4 @@ const veterinarySchema = new Schema({
     }
 );
 
-export const Veterinary = model('Veterinary', veterinarySchema);
+export default model('Veterinary', VeterinarySchema);

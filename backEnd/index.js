@@ -10,11 +10,14 @@ dotenv.config();
 
 connectMongoDB();
 
+app.use(express.json());
 
 //routes
 app.use('/api/veterinary', veterinary);
 
 //middleware
+
+
 app.use((req, res, next) => {
     res.status(404).send('not found 404');
 });
