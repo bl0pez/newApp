@@ -31,6 +31,26 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
 
+    const {email, password} = req.body;
+
+    const verifyEmail = await Veterinary.findOne({email});
+
+    if(!verifyEmail){
+        const error = new Error('Email not found');
+        return res.status(404).json({
+           message: error.message
+        });
+    }
+
+
+    if(!verifyEmail.veryfied){
+        const error = new Error('Email not verified');
+        return res.status(403).json({
+           message: error.message
+        });
+    }
+
+
 }
 
 const confirmEmail = async (req, res) => {
