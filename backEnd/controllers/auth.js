@@ -27,10 +27,6 @@ const register = async (req, res) => {
     } catch (error) {
         console.log('ERROR_REGISTER', error.message);
     }
-
-    res.json({
-        message: 'register'
-    });
 }
 
 const login = async (req, res) => {

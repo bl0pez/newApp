@@ -1,6 +1,7 @@
 import pkg from 'mongoose';
 const { Schema, model } = pkg;
 
+import bcrypt from 'bcryptjs';
 import generateId from '../helpers/generate.js';
 
 const VeterinarySchema = Schema({
@@ -45,5 +46,16 @@ const VeterinarySchema = Schema({
         versionKey: false,
     }
 );
+
+VeterinarySchema.pre('save', async function (next) {
+
+    // Vertifica si el password ya fue modificado
+    if(!this.isModified('password')){
+        return next();
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+});
 
 export default model('Veterinary', VeterinarySchema);
