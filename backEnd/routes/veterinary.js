@@ -1,10 +1,8 @@
 import { Router } from 'express';
 import { confirmEmail, login, register } from '../controllers/auth.js';
-import { getItems } from '../controllers/veterinary.js';
 
 const router = Router();
 
-router.get('/', getItems);
 
 
 

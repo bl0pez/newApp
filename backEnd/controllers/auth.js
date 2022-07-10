@@ -1,3 +1,4 @@
+import generateJWT from "../helpers/generateJWT.js";
 import Veterinary  from "../models/Veterinary.js";
 
 
@@ -33,23 +34,44 @@ const login = async (req, res) => {
 
     const {email, password} = req.body;
 
-    const verifyEmail = await Veterinary.findOne({email});
+    try {
+        const user = await Veterinary.findOne({email});
 
-    if(!verifyEmail){
-        const error = new Error('Email not found');
-        return res.status(404).json({
-           message: error.message
+        if(!user){
+            const error = new Error('Email not found');
+            return res.status(404).json({
+               message: error.message
+            });
+        }
+    
+    
+        if(!user.veryfied){
+            const error = new Error('Email not verified');
+            return res.status(403).json({
+               message: error.message
+            });
+        }
+    
+        const isPasswordValid = await user.comparePassword(password);
+    
+        if(!isPasswordValid){
+            const error = new Error('Password incorrect');
+            return res.status(403).json({
+               message: error.message
+            });
+        }
+    
+        res.json({
+            message: "User logged successfully",
+            token: generateJWT(user._id),
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Internal server error"
         });
     }
-
-
-    if(!verifyEmail.veryfied){
-        const error = new Error('Email not verified');
-        return res.status(403).json({
-           message: error.message
-        });
-    }
-
 
 }
 

@@ -58,4 +58,8 @@ VeterinarySchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, salt);
 });
 
+VeterinarySchema.methods.comparePassword = async function (password) {
+    return await bcrypt.compare(password, this.password);
+}
+
 export default model('Veterinary', VeterinarySchema);
