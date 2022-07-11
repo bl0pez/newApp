@@ -2,5 +2,15 @@
 
 
 const profile = (req, res) => {
-    res.send('profile');
+
+    console.log(req.veterinary);
+
+    res.json({ 
+        message: 'Profile'
+     });
+}
+
+
+export {
+    profile,
 }

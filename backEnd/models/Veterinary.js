@@ -62,4 +62,9 @@ VeterinarySchema.methods.comparePassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 }
 
+VeterinarySchema.methods.toJSON = function(){
+    const {token, password, ...veterinary} = this.toObject();
+    return veterinary;
+}
+
 export default model('Veterinary', VeterinarySchema);

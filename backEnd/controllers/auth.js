@@ -63,7 +63,7 @@ const login = async (req, res) => {
     
         res.json({
             message: "User logged successfully",
-            token: generateJWT(user._id),
+            token: generateJWT(user),
         });
 
     } catch (error) {
