@@ -15,7 +15,12 @@ const PatientSchema = new Schema({
         email: true,
         required: true
     },
-    password: {
+    date: {
+        type: Date,
+        required: true,
+        default: Date.now(),
+    },
+    symptom: {
         type: String,
         required: true
     },
@@ -30,3 +35,6 @@ const PatientSchema = new Schema({
         versionKey: false,
     }
 );
+
+
+export default model('Patient', PatientSchema);

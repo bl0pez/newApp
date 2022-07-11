@@ -4,6 +4,7 @@ import connectMongoDB from './config/connectDB.js';
 
 // Importing routes
 import veterinary from './routes/veterinary.js';
+import patient from './routes/patient.js';
 
 const app = express();
 dotenv.config();
@@ -14,6 +15,7 @@ app.use(express.json());
 
 //routes
 app.use('/api/veterinary', veterinary);
+app.use('/api/patient', patient);
 
 //middleware
 
