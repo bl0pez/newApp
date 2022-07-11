@@ -1,3 +1,4 @@
+import generateId from "../helpers/generate.js";
 import generateJWT from "../helpers/generateJWT.js";
 import Veterinary  from "../models/Veterinary.js";
 
@@ -99,9 +100,87 @@ const confirmEmail = async (req, res) => {
 
 }
 
+const recoveryPassword = async (req, res) => {
+    const {email} = req.body;
+
+    const existEmail = await Veterinary.findOne({email});
+    
+    if(!existEmail){
+        const error = new Error('Email not found');
+        return res.status(400).json({
+           message: error.message
+        });
+    }
+
+    
+    try {
+        
+        await existEmail.updateOne({token: generateId()});
+        
+        res.json({
+            message: "Password recovery email sent successfully",
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+
+}
+
+const checkToken = async (req, res) => {
+    const { token } = req.params;
+
+    const existToken = await Veterinary.findOne({token});
+
+    if(!existToken){
+        const error = new Error('Invalid token');
+        return res.status(400).json({
+           message: error.message
+        });
+    }
+
+    res.json({
+        message: "Token valid",
+    });
+
+}
+
+const newPassword = async (req, res) => {
+    const {token} = req.params;
+    const {password} = req.body;
+
+    const veterinary = await Veterinary.findOne({token});
+
+    if(!veterinary){
+        const error = new Error('Herror token');
+        return res.status(400).json({
+           message: error.message
+        });
+    }
+
+    try {
+        
+        veterinary.token = null;
+        veterinary.password = password;
+        await veterinary.save();
+
+        res.json({
+            message: "Password changed successfully",
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+
+}
 
 export {
     register,
     login,
     confirmEmail,
+    recoveryPassword,
+    checkToken,
+    newPassword,
 }
