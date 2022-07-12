@@ -1,12 +1,10 @@
 import jwt from 'jsonwebtoken';
 
-const generateJWT = (user) => {
+const generateJWT = (veterinary) => {
 
     const secret = process.env.JWT_SECRET;
 
-    return jwt.sign({
-        data: user
-    }, secret, { expiresIn: '1d' });
+    return jwt.sign({veterinary}, secret, { expiresIn: '1d' });
 
 }
 

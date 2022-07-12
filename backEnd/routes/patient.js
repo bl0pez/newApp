@@ -1,12 +1,18 @@
 import { Router } from 'express';
-import { addPatient, getPatient } from '../controllers/patient.js';
+import { addPatient, getpatients, } from '../controllers/patient.js';
+import checkAuth from '../middleware/authMiddleware.js';
 
 const router = Router();
 
 
 router.route('/')
-    .post(addPatient)
-    .get(getPatient);
+    .post(checkAuth ,addPatient)
+    .get(checkAuth, getpatients);
+
+router.route('/:id')
+    .get(checkAuth, )
+    .put(checkAuth, )
+    .delete(checkAuth, );
 
 
 export default router;

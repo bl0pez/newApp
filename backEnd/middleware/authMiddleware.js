@@ -14,7 +14,7 @@ const checkAuth = (req, res, next) => {
         
         const decoded = jwt.verify(token.split(' ')[1], process.env.JWT_SECRET);
 
-        req.veterinary = decoded;
+        req.veterinary = decoded.veterinary;
 
         next();
 
