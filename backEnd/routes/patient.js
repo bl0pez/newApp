@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addPatient, getpatients, } from '../controllers/patient.js';
+import { addPatient, deletepatient, getpatient, getpatients, putpatient, } from '../controllers/patient.js';
 import checkAuth from '../middleware/authMiddleware.js';
 
 const router = Router();
@@ -10,9 +10,9 @@ router.route('/')
     .get(checkAuth, getpatients);
 
 router.route('/:id')
-    .get(checkAuth, )
-    .put(checkAuth, )
-    .delete(checkAuth, );
+    .get(checkAuth, getpatient)
+    .put(checkAuth, putpatient)
+    .delete(checkAuth, deletepatient);
 
 
 export default router;

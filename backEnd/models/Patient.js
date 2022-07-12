@@ -24,9 +24,9 @@ const PatientSchema = new Schema({
         type: String,
         required: true
     },
-    vaterinary: {
+    veterinary: {
         type: Schema.Types.ObjectId,
-        ref: 'Vaterinary',
+        ref: 'Veterinary',
         required: true
     },
 }
